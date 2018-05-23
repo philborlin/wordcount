@@ -42,6 +42,12 @@ class WordCountTest extends WordSpec {
         val report = WordCountReport(30, Map("foo" -> 30))
         assert(WordCount.count(text) === report)
       }
+
+      "except when there is a hyphenated word" in {
+        val text = "dog-friendly"
+        val report = WordCountReport(1, Map(text -> 1))
+        assert(WordCount.count(text) === report)
+      }
     }
   }
 }
