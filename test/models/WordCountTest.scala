@@ -27,5 +27,13 @@ class WordCountTest extends WordSpec {
         assert(WordCount.count(text) === report)
       }
     }
+
+    "given a simple line break" should {
+      "split the word" in {
+        val text = "foo\nbar"
+        val report = WordCountReport(2, Map("foo" -> 1, "bar" -> 1))
+        assert(WordCount.count(text) === report)
+      }
+    }
   }
 }
