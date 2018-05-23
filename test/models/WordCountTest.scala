@@ -35,5 +35,13 @@ class WordCountTest extends WordSpec {
         assert(WordCount.count(text) === report)
       }
     }
+
+    "given special characters" should {
+      "split the word" in {
+        val text = "foo!foo\"foo#foo$foo%foo&foo(foo)foo*foo+foo,foo.foo/foo:foo;foo<foo=foo>foo?foo@foo[foo\\foo]foo^foo`foo{foo|foo}foo~foo"
+        val report = WordCountReport(30, Map("foo" -> 30))
+        assert(WordCount.count(text) === report)
+      }
+    }
   }
 }

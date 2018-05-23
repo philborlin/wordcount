@@ -7,7 +7,7 @@ object WordCount {
       else return map
     }
 
-    val words = text.split("\\s")
+    val words = text.split("\\W")
     val map = go(words, Map())
 
     return WordCountReport(words.length, map.toMap)
