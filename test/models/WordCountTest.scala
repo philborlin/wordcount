@@ -2,6 +2,8 @@ package models
 
 import org.scalatest.WordSpec
 
+import scala.io.Source
+
 class WordCountTest extends WordSpec {
   "Wordcount" when {
     "given a letter" should {
@@ -61,6 +63,19 @@ class WordCountTest extends WordSpec {
         val text = "foo  bar"
         val report = WordCountReport(2, Map("foo" -> 1, "bar" -> 1))
         assert(WordCount.count(text) === report)
+      }
+    }
+
+    "given a large block of text (10MB)" should {
+      "perform within a couple seconds" in {
+        val stream = getClass.getClassLoader.getResourceAsStream("ipsum.txt")
+        val text = Source.fromInputStream(stream).mkString
+
+        val t0 = System.nanoTime()
+        WordCount.count(text)
+        val t1 = System.nanoTime()
+        val elapsed = t1 - t0
+        assert(elapsed < 2000000000)
       }
     }
   }
