@@ -19,5 +19,13 @@ class WordCountTest extends WordSpec {
         assert(WordCount.count(text) === report)
       }
     }
+
+    "given two of the same word" should {
+      "report 2 words and 2 occurrence of the word" in {
+        val text = "foo foo"
+        val report = WordCountReport(2, Map("foo" -> 2))
+        assert(WordCount.count(text) === report)
+      }
+    }
   }
 }
