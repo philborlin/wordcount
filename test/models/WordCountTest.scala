@@ -55,5 +55,13 @@ class WordCountTest extends WordSpec {
         assert(WordCount.count(text) === report)
       }
     }
+
+    "given multiple whitespace characters in a row" should {
+      "NOT create additional words" in {
+        val text = "foo  bar"
+        val report = WordCountReport(2, Map("foo" -> 1, "bar" -> 1))
+        assert(WordCount.count(text) === report)
+      }
+    }
   }
 }
