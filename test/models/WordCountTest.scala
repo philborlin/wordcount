@@ -48,6 +48,12 @@ class WordCountTest extends WordSpec {
         val report = WordCountReport(1, Map(text -> 1))
         assert(WordCount.count(text) === report)
       }
+
+      "or a contraction" in {
+        val text = "don't"
+        val report = WordCountReport(1, Map(text -> 1))
+        assert(WordCount.count(text) === report)
+      }
     }
   }
 }
