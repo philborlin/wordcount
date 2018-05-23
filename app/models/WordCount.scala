@@ -4,7 +4,7 @@ import scala.collection.mutable
 
 object WordCount {
   def count(text: String): WordCountReport = {
-    val words = text.split("[^A-Za-z0-9_'-]+")
+    val words = text.toLowerCase.split("[^A-Za-z0-9_'-]+")
     val map = mutable.Map[String, Int]()
 
     words.foreach { word =>

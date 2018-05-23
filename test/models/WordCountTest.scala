@@ -66,6 +66,14 @@ class WordCountTest extends WordSpec {
       }
     }
 
+    "given two of the same word with different capitalization" should {
+      "count as one word with two occurrences" in {
+        val text = "Foo foo"
+        val report = WordCountReport(2, Map("foo" -> 2))
+        assert(WordCount.count(text) === report)
+      }
+    }
+
     "given a large block of text (10MB)" should {
       "perform within a couple seconds" in {
         val stream = getClass.getClassLoader.getResourceAsStream("ipsum.txt")
