@@ -3,13 +3,12 @@ package controllers
 import java.nio.file.{Files, Path, Paths}
 
 import javax.inject._
+import models.{WordCount, WordCountReport}
+import play.api.libs.Files.TemporaryFile
+import play.api.libs.json._
 import play.api.mvc._
 
 import scala.collection.JavaConverters._
-import models.{WordCount, WordCountReport}
-import play.api.http.HttpEntity
-import play.api.libs.Files.TemporaryFile
-import play.api.libs.json._
 
 @Singleton
 class WordCountController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
@@ -22,10 +21,7 @@ class WordCountController @Inject()(cc: ControllerComponents) extends AbstractCo
 
       Ok(json)
     }.getOrElse {
-      val headers = Map("error" -> request.body.files.mkString("\n"))
-      new Result(header = ResponseHeader(500, headers), body = HttpEntity.NoEntity)
-
-//      InternalServerError("Could not find file in multipart upload")
+      InternalServerError("Could not find file in multipart upload")
     }
   }
 
