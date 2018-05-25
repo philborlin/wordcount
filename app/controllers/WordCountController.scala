@@ -14,7 +14,10 @@ import scala.collection.JavaConverters._
 class WordCountController @Inject()(cc: ControllerComponents) extends AbstractController(cc) {
   def wordcount: Action[MultipartFormData[TemporaryFile]] = Action(parse.multipartFormData) { request =>
     request.body.files.headOption.map { file =>
-      val path = Paths.get(file.filename)
+      val filename = Paths.get(file.filename).getFileName
+      val path = Files.createTempFile(filename.toString, "text")
+      file.ref.moveTo(path, replace = true)
+
       val text = readFile(path)
       val report = WordCount.count(text)
       val json = reportToJson(report)
