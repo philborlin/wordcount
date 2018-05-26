@@ -7,6 +7,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
 import Grid from '@material-ui/core/Grid';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 import WordCountResults from './WordCountResults';
 
@@ -18,6 +19,7 @@ class WordCount extends Component {
       totalWordCount: 0,
       counts: [],
       shouldHide: true,
+      showProgress: false,
     };
   }
 
@@ -26,21 +28,34 @@ class WordCount extends Component {
   }
 
   handleChange(e) {
-    const selectorFiles = e.target.files
-    const formData = new FormData();
+    // Make the event available asynchronously
     e.persist()
-    Array.from(selectorFiles).forEach(file => {
+
+    const formData = new FormData();
+    Array.from(e.target.files).forEach(file => {
       formData.append(file.name, file);
     });
 
-    return axios.post("/wordcount", formData, {
+    this.setState({
+      showProgress: true,
+      shouldHide: true,
+    })
+
+    axios.post("/wordcount", formData, {
     }).then(response => {
-      this.setState({
-        totalWordCount : response.data.totalWordCount,
-        counts : response.data.counts,
-        shouldHide : false,
-      })
+      // Clear the FileUpload state so it can be reused
       e.target.value = null;
+      this.setState({
+        totalWordCount: response.data.totalWordCount,
+        counts: response.data.counts,
+        shouldHide: false,
+        showProgress: false,
+      })
+    }).catch(response => {
+      e.target.value = null;
+      this.setState({
+        showProgress: false,
+      })
     })
   }
 
@@ -86,6 +101,9 @@ class WordCount extends Component {
             </Card>
           </Grid>
 
+          <Grid container item xs={6} justify="center" style={this.state.showProgress ? {} : { display: 'none' } }>
+            <CircularProgress/>
+          </Grid>
           <Grid item xs={6} style={this.state.shouldHide ? { display: 'none' } : {} }>
             <WordCountResults totalWordCount={this.state.totalWordCount} counts={this.state.counts}/>
           </Grid>
