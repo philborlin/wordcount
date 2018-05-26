@@ -7,8 +7,5 @@ GET     /                           controllers.FrontendController.index()
 
 POST    /wordcount                  controllers.WordCountController.wordcount()
 
-# An example route (Prefix all API routes with apiPrefix defined in application.conf)
-GET     /api/summary                controllers.HomeController.appSummary
-
 # Serve static assets under public directory
 GET     /*file                      controllers.FrontendController.assetOrDefault(file)
