@@ -28,11 +28,13 @@ class WordCountController @Inject()(cc: ControllerComponents) extends AbstractCo
     }
   }
 
+
+
   // Scala Source leaves the file open so we'll use Java Files instead
   def readFile(path: Path): String = Files.readAllLines(path).asScala.mkString("\n")
 
   def reportToJson(report: WordCountReport): JsObject = {
-    val counts = report.countsOfEachOccurence.map { case (word, count) =>
+    val counts = report.countsOfEachOccurrence.map { case (word, count) =>
       JsObject(Seq("word" -> JsString(word), "count" -> JsNumber(count)))
     }
 

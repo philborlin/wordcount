@@ -12,8 +12,8 @@ object WordCount {
       map += (word -> wordCount)
     }
 
-    return WordCountReport(words.length, map.toMap)
+    WordCountReport(words.length, map.toMap)
   }
 }
 
-case class WordCountReport(totalNumberOfWords: Int, countsOfEachOccurence: Map[String, Int])
+case class WordCountReport(totalNumberOfWords: Int, countsOfEachOccurrence: Map[String, Int])

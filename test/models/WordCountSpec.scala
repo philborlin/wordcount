@@ -4,8 +4,8 @@ import org.scalatest.WordSpec
 
 import scala.io.Source
 
-class WordCountTest extends WordSpec {
-  "Wordcount" when {
+class WordCountSpec extends WordSpec {
+  "WordCount" when {
     "given a letter" should {
       "report 1 word and 1 occurrence of that word" in {
         val word = "a"
